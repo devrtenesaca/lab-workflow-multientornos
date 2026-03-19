@@ -19,5 +19,5 @@ jobs:
       - name: 🚀 Simular Despliegue
         run: |
           echo "Conectando a Google Cloud para el entorno: ${{ inputs.env-name }}"
-          echo "Mensaje del entorno: ${{ secrets.env-secret }}"
+          echo "Mensaje del entorno: ${{ secrets.ENV_MESSAGE }}"
           echo "Status: Despliegue completado con éxito."
