@@ -1,0 +1,21 @@
+name: Main Orchestrator
+
+on:
+  push:
+    branches: [ master, dev ]
+
+jobs:
+  deploy-dev:
+    uses: ./.github/workflows/reusable-workflow-docker.yaml
+    with:
+      env-name: 'dev'
+    secrets:
+      env-secret: ${{ secrets.ENV_MESSAGE }}
+
+  deploy-prod:
+    if: github.ref == 'refs/heads/master'
+    uses: ./.github/workflows/reusable-deploy.yml
+    with:
+      env-name: 'production'
+    secrets:
+      env-secret: ${{ secrets.ENV_MESSAGE }}

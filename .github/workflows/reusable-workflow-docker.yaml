@@ -1,33 +1,23 @@
-name: Reusable Workflow - Docker
+name: Reusable Workflow 
 on:
   workflow_call:
     inputs:
-      image-name:
+      env-name:
         required: true
         type: string
-      dockerfile-path:
-        required: false
-        type: string
-        default: './Dockerfile'
-    # we define de secrets that we want to use in the reusable workflow
+    
     secrets:
-      registry-token:
-        required: false
+      env-secret: #this vare will get the value of the secret that we want to use in the reusable workflow
+        required: true
 jobs:
-  build-and-check:
+  deploy:
+    name: Deploy to ${{ inputs.env-name }}
     runs-on: ubuntu-latest
+    environment: ${{ inputs.env-name }}
+
     steps:
-      - name: Check out the repository
-        uses: actions/checkout@v3
-
-
-     # REUTILIZAMOS tu Custom Action del lab anterior dentro de este workflow
-      - name: Run and Security Scan the Docker image
-        uses: ./.github/actions/security-check
-        with:
-          dockerfile-path: ${{ inputs.dockerfile-path }}
-      # - name: Build the Docker image
-      #   run: |
-      #     docker build -t ${{ inputs.image-name }} -f ${{ inputs.dockerfile-path }} .
-      - name: ✅ Success Report
-        run: echo "La imagen ${{ inputs.image_name }} pasó todas las pruebas."
+      - name: 🚀 Simular Despliegue
+        run: |
+          echo "Conectando a Google Cloud para el entorno: ${{ inputs.env-name }}"
+          echo "Mensaje del entorno: ${{ secrets.env-secret }}"
+          echo "Status: Despliegue completado con éxito."
