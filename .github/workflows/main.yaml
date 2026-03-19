@@ -6,6 +6,7 @@ on:
 
 jobs:
   deploy-dev:
+    if: github.ref == 'refs/heads/dev'
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
       env-name: 'dev'
